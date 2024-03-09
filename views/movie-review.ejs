@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+    crossorigin="anonymous"></script>
+    <title>Movie Review</title>
+    <link rel="stylesheet" href="/styles/moviereviewstyle.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Include jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <%- include('header', { active: 'dashboard' }) %>
+    <h3 class="screen-title">Approve Screening</h3>
+    <ul>
+        <% movies.forEach(function(movie) { %>
+            <li>
+
+                <div class="s-container">
+                    <div class="left">
+                        <% if (movie.POSTER) { %>
+                            <img src="<%= movie.POSTER %>" alt="Movie Poster" class="movie-poster">
+                        <% } else { %>
+                            <img src="/path/to/default/poster.png" alt="Default Poster" class="movie-poster">
+                        <% } %>
+                    </div>
+                    <div class="right">
+                        <% if (movie.CHANGE_DATE) { %>
+                            <div class="date">
+                                <%= new Date(movie.CHANGE_DATE).toDateString() %>
+                            </div>
+                        <% } %>
+                        <div class="movie-title">
+                            <%= movie.TITLE %>
+                        </div>
+                        <% if (movie.RELEASEDATE) { %>
+                            <div class="genre"> <!-- Assuming you wanted to show the release date here -->
+                                <%= new Date(movie.RELEASEDATE).toDateString() %>
+                            </div>
+                        <% } %>
+                        <div class="screenings">
+                            <span>
+                                <%= movie.OVERVIEW ? movie.OVERVIEW : 'Overview not available.' %>
+                            </span>
+                        </div>
+                        
+                        <% if (movie.TRAILER) { %>
+                            <a href="<%= movie.TRAILER %>" target="_blank"><button class="trailer">Watch Trailer</button></a>
+                        <% } else { %>
+                            <button class="trailer" disabled>No Trailer Available</button>
+                        <% } %>
+                        <form action="/admin/approve-movie" method="post">
+                            <input type="hidden" name="logId" value="<%= movie.LOG_ID %>">
+                            <button class="trailer" type="submit">Approve</button>
+                        </form>
+                        <form action="/admin/delete-movie" method="post">
+                            <input type="hidden" name="movieId" value="<%= movie.MOVIE_ID %>">
+                            <button class= "trailer" type="submit">Delete</button>
+                        </form>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!--Movie ID: <%= movie.MOVIE_ID %>,Title: <%= movie.TITLE %> ,Change Date: <%= movie.CHANGE_DATE %>
+                <form action="/admin/approve-movie" method="post">
+                    <input type="hidden" name="logId" value="<%= movie.LOG_ID %>">
+                    <button class="trailer" type="submit">Approve</button>
+                </form>
+                <form action="/admin/delete-movie" method="post">
+                    <input type="hidden" name="movieId" value="<%= movie.MOVIE_ID %>">
+                    <button class= "trailer" type="submit">Delete</button>
+                </form>-->
+            </li>
+        <% }); %>
+    
+    </ul>
+    <h3 class="screen-title">Delete Movie</h3>
+    <!-- Movie Search Section -->
+    <div id="movie-search-section">
+        <!--<label for="movie-search"><h2>Search Movie:</h2></label>-->
+        <input type="text" id="movie-search" placeholder="Search by title...">
+        <div class="search-icon"><i class='bx bx-search bx-sm'></i></div>
+    </div>
+    <ul id="search-results"></ul>
+    
+    <!-- Movie Details Section -->
+    <div id="movie-details"></div>
+
+    
+    <%- include('footer')%>
+    <script src="/js/admin-movie.js"></script>
+    
+</body>
+</html>

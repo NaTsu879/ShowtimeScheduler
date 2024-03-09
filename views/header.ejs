@@ -1,0 +1,79 @@
+
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand fs-4" href="#">Showtime Scheduler</a>
+          <button
+            class="navbar-toggler shadow-none border-0"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasNavbar"
+            aria-controls="offcanvasNavbar"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="sidebar offcanvas offcanvas-end"
+            tabindex="-1"
+            id="offcanvasNavbar"
+            aria-labelledby="offcanvasNavbarLabel"
+          >
+            <div class="offcanvas-header text-white border-bottom">
+              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+              <button
+                type="button"
+                class="btn-close btn-close-white shadow-none"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul
+                class="navbar-nav justify-content-center align-items-center flex-grow-1 pe-3"
+              >
+                <li class="nav-item mx-2">
+                  <a class="nav-link <%= active === 'home' ? 'active' : '' %>" href="/home">Home</a>
+                </li>
+                <li class="nav-item mx-2">
+                  <a class="nav-link <%= active === 'movies' ? 'active' : '' %>" href="/Movies"
+                    >Movies</a
+                  >
+                </li>
+                <li class="nav-item mx-2">
+                  <a class="nav-link <%= active === 'theatres' ? 'active' : '' %>" href="/theaters">Theaters</a>
+                </li>
+                <% if (role === 'Admin') { %>
+                  <li class="nav-item mx-2">
+                    <a class="nav-link <%= active === 'dashboard' ? 'active' : '' %>"" href="/admin/review-signups">Dashboard</a>
+                  </li>
+                <% } else if (role === 'HallAdmin') { %>
+                  <li class="nav-item mx-2">
+                    <a class="nav-link <%= active === 'dashboard' ? 'active' : '' %>"" href="/hall_admin/screening">Dashboard</a>
+                  </li>
+                <% } %>
+              </ul>
+              <div
+              class="d-flex justify-content-center align-items-center gap-3 mt-2 pe-3 mb-1"
+            >
+              <a
+                href="/account"
+                class="text-white text-decoration-none px-3 py-2 align-items-center border border-white rounded-5"
+                >Manage account</a
+              >
+            </div>     
+            <!-- change -->
+              <div
+                class="d-flex justify-content-center align-items-center gap-3 mt-2 pe-3 mb-1"
+              >
+                <a
+                  href="/logout"
+                  class="text-white text-decoration-none px-3 py-2 align-items-center border border-white rounded-5"
+                  >Log out</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm Booking</title>
+    <link rel="stylesheet" href="/styles/seat-map-style.css">
+</head>
+<body data-hall-id="<%= hallId %>" data-screening-id="<%= screeningId %>">
+    
+    <div class="book-container">
+    <h2>Confirm Your Booking</h2>
+    <p><b>Welcome, <%= userName %></b></p>
+    <p><b>Movie:</b> <%= movieName %></p>
+    <p><b>Hall:</b> <%= hallName %></p>
+    <p><b>Show Time:</b> <%= showTime %></p>
+    <p><b>Screening Date:</b> <%= screeningDate %></p>
+
+    <form id="booking-form">
+        <h3>Selected Seats</h3>
+        <ul>
+            <% seatDetails.forEach(function(seat, index) { %>
+            <li data-price="<%= seat.PRICE %>" data-seat-id="<%= seat.SEATID %>">
+                <div class="seat-sel">
+                    <div>
+                    <p>Row: <%= seat.ROWLABEL %>
+                    Seat: <%= seat.SEATNUMBER %>,
+                    Type: <%= seat.SEATTYPE %>
+                    Price: $<%= seat.PRICE %>
+                    </p>
+                </div>
+                
+                <!-- Checkbox for applying a voucher -->
+                <input
+                    type="checkbox"
+                    name="applyVoucher"
+                    value="<%= seat.SEATID %>" 
+                    id="voucher-<%= index %>"
+                />
+                <label for="voucher-<%= index %>">Apply Voucher</label>
+                </div>
+            </li>
+            <% }); %>
+        </ul>
+
+
+        <h3>Apply a Voucher</h3>
+        <select name="voucherId" id="voucher-select">
+            <option value="">Select a Voucher</option>
+            <% availableVouchers.forEach(function(voucher) { %>
+            <option value="<%= voucher.VOUCHERID %>" data-discount="<%= voucher.DISCOUNTRATE %>" data-remaininguses="<%= voucher.REMAININGUSES %>">
+                <%= voucher.DESCRIPTION %> - <%= voucher.DISCOUNTRATE %>% off, Remaining Uses: <%= voucher.REMAININGUSES %>
+            </option>
+            <% }); %>
+        </select>
+
+        <button type="button" id="confirm-booking">Confirm Booking</button>
+    </form>
+</div>
+
+    <script src="/js/confirmBooking.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/styles/admin-review-style.css" />
+    <title>Admin Review Sign-ups</title>
+  </head>
+
+  <body>
+    <%- include('header', { active: 'dashboard' }) %>
+
+    <h2 class="cast-title">Admin Information</h2>
+    <div class="admin-container">
+      <div class="top">
+        <div><strong>Name:</strong> <%= info[0].NAME%></div>
+        <div><strong>Email:</strong> <%= info[0].EMAIL%></div>
+        <div><strong>Role:</strong> <%= info[0].USERROLE%></div>
+      </div>
+
+      <div class="bottom">
+        <a href="/account">
+          <button class="manage-btn">Manage Account</button>
+        </a>
+
+        <a href="/admin/movie-review">
+          <button class="manage-btn">Manage Movies</button>
+        </a>
+      </div>
+    </div>
+
+    <h2 class="cast-title">Review and Approve Sign-ups</h2>
+    <!-- Button for navigating to the Admin Account Management page -->
+    <!--<a href="/admin/account" style="margin-bottom: 20px; display: inline-block"
+      >Manage Account</a
+    >-->
+
+    <!--<form action="/logout" method="get">
+      <button type="submit">Logout</button>
+    </form>-->
+
+    <% if (pendingUsers && pendingUsers.length> 0) { %>
+    <div class="pending-conatiner">
+      <% pendingUsers.forEach(function(user) { %>
+
+      <div class="box-container">
+        <div class="left">
+          <div>
+            <strong>Name:</strong>
+            <%= user.NAME %>
+          </div>
+          <div>
+            <strong>Email:</strong>
+            <%= user.EMAIL %>
+          </div>
+          <div>
+            <strong>Role:</strong>
+            <%= user.USERROLE %>
+          </div>
+        </div>
+        <div class="right">
+          <form action="/admin/approve-signup" method="post">
+            <input type="hidden" name="userID" value="<%= user.ID %>" />
+            <button type="submit" class="button">Approve</button>
+          </form>
+
+          <form action="/admin/remove-signup" method="post">
+            <input type="hidden" name="userID" value="<%= user.ID %>" />
+            <button type="submit" class="button">Remove</button>
+          </form>
+        </div>
+      </div>
+
+      <!--  <li>
+        Name: <%= user.NAME %>, Email: <%= user.EMAIL %>, Role: <%=
+        user.USERROLE %>
+        
+        <form action="/admin/approve-signup" method="post">
+          <input type="hidden" name="userID" value="<%= user.ID %>" />
+          <button type="submit">Approve</button>
+        </form>
+        
+        <form action="/admin/remove-signup" method="post">
+          <input type="hidden" name="userID" value="<%= user.ID %>" />
+          <button type="submit">Remove</button>
+        </form>
+      </li>-->
+      <% }); %>
+    </div>
+    <% } else { %>
+    <p>No pending sign-ups to review.</p>
+    <% } %>
+ 
+
+    <!--<a href="/admin/movie-review"><h3>Manage Movie</h3></a>-->
+
+    <%- include('footer')%>
+  </body>
+</html>

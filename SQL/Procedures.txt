@@ -1,0 +1,190 @@
+CREATE OR REPLACE PROCEDURE DeleteMovieCascade(p_movieId IN NUMBER,sw IN NUMBER) AS
+BEGIN
+
+  DELETE FROM MOVIEWITHGENRE WHERE MOVIEID = p_movieId;
+    
+    DELETE FROM MOVIE_STATUS_LOG WHERE MOVIE_ID = p_movieId;
+    
+    DELETE FROM TICKET WHERE SCREENINGID = (SELECT SCREENINGID FROM SCREENING WHERE MOVIEID = p_movieId) ;
+    
+    DELETE FROM SCREENING WHERE MOVIEID = p_movieId;
+
+  DELETE FROM MOVIE WHERE MOVIEID = p_movieId;
+    
+  
+  COMMIT;
+END;
+
+
+
+
+
+
+
+
+
+CREATE OR REPLACE PROCEDURE DeleteScreening (p_screeningid IN NUMBER)
+IS
+BEGIN
+  -- Step 1: Delete related tickets from the ticket table
+  DELETE FROM ticket
+  WHERE SCREENINGID = p_screeningid;
+  
+  -- Step 2: Delete the screening record
+  DELETE FROM screening
+  WHERE SCREENINGID = p_screeningid;
+	
+  COMMIT;
+  
+EXCEPTION
+  WHEN OTHERS THEN
+    ROLLBACK;
+    RAISE;
+END;
+
+
+
+
+
+
+
+CREATE OR REPLACE PROCEDURE InsertMovieWithGenres(
+    p_title IN VARCHAR2,
+    p_poster IN VARCHAR2,
+    p_releaseDate IN DATE,
+    p_backdrop IN VARCHAR2,
+    p_overview IN VARCHAR2,
+    p_trailer IN VARCHAR2,
+    p_genres IN VARCHAR2
+) AS
+    v_movieId NUMBER;
+BEGIN
+    -- Insert movie and get its ID
+    INSERT INTO MOVIE (MOVIEID, TITLE, POSTER, RELEASEDATE, BACKDROP, OVERVIEW, TRAILER)
+    VALUES (MOVIE_SEQ.NEXTVAL, p_title, p_poster, p_releaseDate, p_backdrop, p_overview, p_trailer)
+    RETURNING MOVIEID INTO v_movieId;
+    
+    -- Split genres and insert each into MOVIEWITHGENRE using the custom SPLIT_STRING function
+    FOR r IN (
+        SELECT COLUMN_VALUE AS genreName
+        FROM TABLE(SPLIT_STRING(p_genres, ','))
+    ) LOOP
+        INSERT INTO MOVIEWITHGENRE (MOVIEID, GENRENAME)
+        VALUES (v_movieId, r.genreName);
+    END LOOP;
+    
+    COMMIT;
+END;
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE OR REPLACE PROCEDURE process_ticket_purchase(
+    p_screeningId IN NUMBER,
+    p_userId IN NUMBER,
+    p_seatId IN NUMBER)
+IS
+    l_total_tickets NUMBER;
+    l_eligible_voucher_id NUMBER;
+    l_max_usage NUMBER;
+    l_voucher_found BOOLEAN := FALSE;
+    l_seat_booked NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO l_seat_booked FROM TICKET 
+    WHERE SCREENINGID = p_screeningId AND SEATID = p_seatId;
+
+    IF l_seat_booked > 0 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Seat is already booked.');
+    END IF;
+
+    INSERT INTO TICKET (TICKETID, SCREENINGID, USERID, BOOKINGTIME, TICKETDATE, SEATID)
+    VALUES (TICKET_SEQ.NEXTVAL, p_screeningId, p_userId, CURRENT_TIMESTAMP, CURRENT_DATE, p_seatId);
+
+    SELECT COUNT(*) INTO l_total_tickets FROM TICKET WHERE USERID = p_userId;
+
+    BEGIN
+        SELECT VOUCHERID, MAXUSAGE INTO l_eligible_voucher_id, l_max_usage
+        FROM VOUCHER WHERE REQUIREDTICKETS = l_total_tickets ;
+        l_voucher_found := TRUE;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            l_voucher_found := FALSE;
+    END;
+
+    IF l_voucher_found THEN
+        INSERT INTO USERVOUCHER (USERVOUCHERID, USERID, VOUCHERID, EARNEDDATE, EXPIRYDATE, REMAININGUSES)
+        VALUES (USER_VOUCHER_SEQ.NEXTVAL, p_userId, l_eligible_voucher_id, SYSDATE, SYSDATE + 90, l_max_usage);
+    END IF;
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        RAISE;
+END;
+
+
+
+
+
+
+
+
+
+CREATE OR REPLACE PROCEDURE register_hall_admin(
+    p_userId NUMBER, 
+    p_hallName VARCHAR2,
+    p_location VARCHAR2,
+    p_numberOfRows NUMBER,
+    p_seatsPerRow NUMBER
+)
+IS
+    v_hallId NUMBER;
+BEGIN
+    -- Insert new hall into CINEMA_HALL table and retrieve the generated hallId
+    INSERT INTO CINEMA_HALL (HALLID, NAME, LOCATION, NUMBEROFROWS, SEATSPERROW)
+    VALUES (CINEMAHALL_SEQ.NEXTVAL, p_hallName, p_location, p_numberOfRows, p_seatsPerRow)
+    RETURNING HALLID INTO v_hallId;
+
+    -- Insert a record linking the new hall to the hall admin in the HALLADMIN table
+    INSERT INTO HALLADMIN (USERID, HALLID)
+    VALUES (p_userId, v_hallId);
+
+    -- Loop through rows and seats to insert seat information
+    FOR i IN 1..p_numberOfRows LOOP
+        FOR j IN 1..p_seatsPerRow LOOP
+            DECLARE
+                v_rowLabel CHAR := CHR(64 + i); -- Convert row number to ASCII letter (A, B, C, ...)
+                v_seatType VARCHAR2(20);
+            BEGIN
+                -- Determine seat type
+                IF v_rowLabel = 'A' THEN
+                    v_seatType := 'Double Daybed';
+                ELSIF v_rowLabel IN ('B', 'C') THEN
+                    v_seatType := 'Full Recliner';
+                ELSE
+                    v_seatType := 'Standard';
+                    IF j IN (1, p_seatsPerRow) THEN
+                        v_seatType := 'Wheelchair'; -- Assign wheelchair type to the first and last seats
+                    END IF;
+                END IF;
+                
+                -- Insert seat with determined type using a sequence for SEATID
+                INSERT INTO SEAT (SEATID, HALLID, ROWLABEL, SEATNUMBER, SEATTYPE)
+                VALUES (SEAT_SEQ.NEXTVAL, v_hallId, v_rowLabel, j, v_seatType);
+            END;
+        END LOOP;
+    END LOOP;
+
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        RAISE;
+END;

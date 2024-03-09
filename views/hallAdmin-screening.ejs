@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+      crossorigin="anonymous"
+    ></script>
+    <title>Add Screening</title>
+    <link rel="stylesheet" href="/styles/halladminstle.css" />
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <%- include('header', { active: 'dashboard' }) %>
+    <!--
+    <form id="add-screening-form">
+        <div>
+            <label for="movie-search"><h2 class="screen-title">Search Movie:</h2></label>
+            <input type="text" id="movie-search" placeholder="Search by title...">
+            <ul id="search-results"></ul>
+        </div>
+        <h2 class="screen-title">Add Screenings:</h2>
+        <div>
+            <label for="showtime">Showtime:</label>
+            <input type="datetime-local" id="showtime" name="showtime" required>
+        </div>
+        <div>
+            <label for="screening-date">Screening Date:</label>
+            <input type="date" id="screening-date" name="screeningDate" required>
+        </div>
+      
+        <input type="hidden" id="selected-movie-id" name="movieId">
+        <button type="submit">Add Screening</button>
+    </form>
+    <div id="screening-results-container">
+        <h2>Screenings</h2>
+        <ul id="screening-results"></ul>
+    </div>
+-->
+<h1><%= name %></h1>
+<% if (showWarning) { %>
+  <div class="warning-message">
+    <p>Warning: The average rating of this hall is below 2. Consider improving the quality.</p>
+  </div>
+<% } %>
+    <h2 class="screen-title">Add Screenings</h2>
+    <div class="add-screening-container">
+      <form id="add-screening-form">
+        <div>
+          <h4>Search</h4>
+          <input
+            type="text"
+            id="movie-search"
+            placeholder="Search by title..."
+          />
+          <ul id="search-results"></ul>
+        </div>
+        <div>
+          <h4>Showtime</h4>
+          <input type="datetime-local" id="showtime" name="showtime" required />
+        </div>
+        <div>
+          <h4>Screening Date</h4>
+          <input
+            type="date"
+            id="screening-date"
+            name="screeningDate"
+            required
+          />
+        </div>
+
+        <input type="hidden" id="selected-movie-id" name="movieId" />
+        <button type="submit" class="add-scr-btn">Add Screening</button>
+      </form>
+      <div id="screening-results-container">
+        <h2>Screenings</h2>
+        <ul id="screening-results"></ul>
+      </div>
+    </div>
+
+    <form id="insert-movie-form">
+      <h2 class="screen-title">Request for adding a movie:</h2>
+      <div>
+        <h4>Title (mandatory)</h4>
+        <input type="text" id="movie-title" name="title" required />
+      </div>
+      <div>
+        <h4>Poster URL</h4>
+        <input type="text" id="movie-poster" name="poster" />
+      </div>
+      <div>
+        <h4>Release Date</h4>
+        <input type="date" id="movie-releaseDate" name="releaseDate" />
+      </div>
+      <div>
+        <h4>Backdrop URL</h4>
+        <input type="text" id="movie-backdrop" name="backdrop" />
+      </div>
+      <div>
+        <h4>Overview</h4>
+        <textarea id="movie-overview" name="overview"></textarea>
+      </div>
+      <div>
+        <h4>Trailer URL</h4>
+        <input type="text" id="movie-trailer" name="trailer" />
+      </div>
+      <div>
+        <h4>Genre:</h4>
+        <select id="movie-genre" name="genre" multiple>
+          <option value="Family">Family</option>
+          <option value="Mystery">Mystery</option>
+          <option value="Adventure">Adventure</option>
+          <option value="Fantasy">Fantasy</option>
+          <option value="Romance">Romance</option>
+          <option value="Horror">Horror</option>
+          <option value="Thriller">Thriller</option>
+          <option value="Animation">Animation</option>
+          <option value="Action">Action</option>
+          <option value="History">History</option>
+          <option value="Comedy">Comedy</option>
+          <option value="Drama">Drama</option>
+          <option value="Science Fiction">Science Fiction</option>
+          <option value="Crime">Crime</option>
+          <option value="War">War</option>
+          <option value="Western">Western</option>
+          <option value="Music">Music</option>
+        </select>
+      </div>
+
+      <button type="submit" class="add-scr-btn">Send Request</button>
+
+    <%- include('footer')%>
+    <!-- Include the separate JavaScript file for handling the movie search functionality -->
+
+    <script src="/js/add_screening.js"></script>
+  </body>
+</html>

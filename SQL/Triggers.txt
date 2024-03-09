@@ -1,0 +1,43 @@
+CREATE OR REPLACE TRIGGER AddOrUpdateUserVoucherAfterTicketDelete
+AFTER DELETE ON ticket
+FOR EACH ROW
+DECLARE
+  v_count NUMBER;
+  v_remainingUses NUMBER;
+BEGIN
+  -- Check if the user already has a 100% discount voucher
+  SELECT COUNT(*), NVL(MAX(REMAININGUSES), 0) INTO v_count, v_remainingUses
+  FROM uservoucher
+  WHERE USERID = :OLD.USERID
+    AND VOUCHERID = 6; --  the voucher ID for a 100% discount is 6
+
+  IF v_count = 0 THEN
+    -- If no existing 100% discount voucher, insert a new one
+    INSERT INTO uservoucher (USERVOUCHERID, USERID, VOUCHERID, EARNEDDATE, EXPIRYDATE, REMAININGUSES)
+    VALUES (USER_VOUCHER_SEQ.NEXTVAL, :OLD.USERID, 6, SYSDATE, SYSDATE + 30, 1);
+  ELSE
+    -- If an existing 100% discount voucher is found, update the remaining uses
+    UPDATE uservoucher
+    SET REMAININGUSES = v_remainingUses + 1 -- Increase remaining uses by 1
+    WHERE USERID = :OLD.USERID
+      AND VOUCHERID = 6;
+  END IF;
+END;
+
+
+CREATE OR REPLACE TRIGGER after_movie_insert
+AFTER INSERT ON movie
+FOR EACH ROW
+BEGIN
+    INSERT INTO movie_status_log (movie_id, status, change_date)
+    VALUES (:NEW.MOVIEID, 1 , SYSTIMESTAMP); 
+END;
+
+CREATE OR REPLACE TRIGGER trg_add_welcome_voucher
+AFTER INSERT ON PERSON
+FOR EACH ROW
+WHEN (NEW.USERROLE = 'User')
+BEGIN
+    INSERT INTO USERVOUCHER (USERVOUCHERID, USERID, VOUCHERID, EARNEDDATE, EXPIRYDATE, REMAININGUSES)
+    VALUES (user_voucher_seq.NEXTVAL, :NEW.ID, 1, SYSDATE, SYSDATE + 90, 1);
+END;

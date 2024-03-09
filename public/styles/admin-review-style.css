@@ -1,0 +1,138 @@
+*{
+  
+    font-family: "Poppins", sans-serif;
+  }
+  
+  body{
+      background: rgb(0, 0, 0);
+      background-blend-mode: multiply;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      margin-top: 80px;
+  }
+
+  header{
+    position:fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    z-index: 100;
+}
+
+.cast-title {
+    border-radius: 5px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    padding-top: 10px;
+    padding-bottom: 15px;
+    padding-left: 10px;
+    background-color: rgb(33, 37, 41);
+    border-top: 2px solid rgb(92, 92, 92, 0.5);
+    border-bottom: 2px solid rgb(92, 92, 92, 0.5);
+    border-left: 5px solid rgba(251, 37, 118, 0.8);
+    color:white;
+}
+
+.manage-btn {
+    width: 250px;
+    height: 40px;
+    background-color: #4CAF50;
+    
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.manage-btn:hover {
+    background-color: #45a049;
+}
+
+
+
+.admin-container
+{
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    height: 200px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1e1e1e;
+    border: 2px solid #333;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+    color:white;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 20px;
+}
+
+.pending-conatiner
+  {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    color:white;
+    margin-bottom: 40px;
+  }
+
+
+.box-container {
+    display: flex;
+    height: 100px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1e1e1e;
+    border: 2px solid #333;
+    padding: 20px;
+    margin-left: 100px;
+    margin-right: 100px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .box-container:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  .left {
+    flex: 1;
+  }
+
+  .right {
+    display: flex;
+    flex-direction: column; 
+    gap: 10px;
+  }
+
+  .button {
+    height:30px;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  
+  .button:hover {
+    background-color: #45a049;
+  }
+
+  a{
+    text-decoration: none;
+  }

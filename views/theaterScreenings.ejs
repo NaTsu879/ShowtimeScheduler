@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+    crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="/styles/screeningstyle.css" />
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <title>
+    <%= hallName %> Screenings
+  </title>
+</head>
+
+<body>
+
+  <%- include('header', { active: 'theaters' }) %>
+
+
+    <div class="banner-container">
+      <div class="hall-info">
+        <h4><%=hall[0].RATING%> <i class='bx bxs-star'></i> </h4>
+        <h1><%=hall[0].NAME%></h1>
+        
+        <div class="seat-tag">
+          <% seat.forEach(stype=> { %>
+            <button class="custom-button"><%=stype.SEATTYPE%></button>
+          <% }); %>
+        </div>
+
+        <h6><pre style="font-family: Poppins, sans-serif; font-size: 17px; margin-bottom: 0px;">Location                  : <%=hall[0].LOCATION%>
+Number of rows      : <%=hall[0].NUMBEROFROWS%>
+Seats per row         : <%=hall[0].SEATSPERROW%>
+        </pre></h6>
+        
+
+      </div>
+      <div class="layer"></div>
+      <img class="movie-banner"
+        src="https://cdn.discordapp.com/attachments/587526709847392267/1211889123795800074/myke-simon-atsUqIm3wxo-unsplash.jpg?ex=65efd6b2&is=65dd61b2&hm=83a5db6ec636edb8bcb0bb8089a2a6d91509c015a4d189793c3ddd6f0cb2a737&">
+    </div>
+
+    <div class="screen-container">
+      <h2 class="screen-title">
+        <%= hallName %> Screenings
+      </h2>
+    </div>
+
+    <div class="full-section">
+      <div class="screenings-container">
+        <div id="screenings-list">
+          <% screenings.forEach(screening=> { %>
+            <div class="screening" data-genre="<%= screening.GENRES %>"
+              data-date="<%= screening.SCREENINGDATE.toISOString().split('T')[0] %>"
+              data-time="<%= screening.SHOWTIME.toISOString().split('T')[1].substring(0, 5) %>">
+
+
+
+              <div class="s-container">
+                <div class="left">
+                  <img src="<%= screening.POSTER %>" alt="Movie Poster" class="movie-poster">
+                </div>
+                <div class="right">
+
+                  <div class="date">
+                    <%= screening.SCREENINGDATE.toDateString() %>
+                  </div>
+                  <div class="movie-title">
+                    <%= screening.TITLE %>
+                  </div>
+
+                  <div class="genre">
+                    <%=screening.GENRES %>
+                  </div>
+                  <div class="screenings">
+                    <div class="screening-box"
+                      onclick="window.location.href='/booking/<%= screening.HALLID %>/<%= screening.SCREENINGID %>'">
+                      <span class="screening-time">
+                        <%= screening.SHOWTIME.toISOString().split('T')[1].substring(0, 5) %>
+                      </span>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <!--<strong>
+            
+          </strong> - <%= screening.GENRES %>
+            <div>
+              Show Time: <%= screening.SHOWTIME.toISOString().split('T')[1].substring(0, 5) %>
+            </div>
+            <div>
+              Date: <%= screening.SCREENINGDATE.toISOString().split('T')[0] %>
+            </div>
+            <div>
+              Seats Available: <%= screening.SEATINGCAPACITY - screening.SEATSBOOKED %>
+            </div>-->
+            </div>
+            <% }); %>
+        </div>
+      </div>
+
+
+
+      <div class="filters-container">
+        <!-- Filtering dropdowns -->
+        <h1 class="filter-title">Filters</h1>
+
+        <h2>Genre:</h2>
+        <select id="genre-select">
+          <option value="all">All Genres</option>
+          <!-- Populate genres from the database -->
+          <% genres.forEach(genre=> { %>
+            <option value="<%= genre %>">
+              <%= genre %>
+            </option>
+            <% }); %>
+        </select>
+
+        <h2>Date:</h2>
+        <input type="date" id="date-select" />
+
+        <h2>Time:<h2>
+            <input type="time" id="time-select" />
+      </div>
+
+    </div>
+
+
+    <div class="review-container">
+      <h2 class="review-title">Reviews</h2>
+
+      <div class="form-container">
+        <% if (typeof screenings !== 'undefined' && screenings.length > 0) { %>
+          <% if (update==0) { %>
+              <form id="reviewForm" action="/creview" method="post">
+                <input type="hidden" name="userid" value="<%= userid %>">
+                <input type="hidden" name="hallid" value="<%= screenings[0].HALLID %>">
+                <div class="form-group">
+                  <label for="reviewDescription" class="form-label">Review Description</label>
+                  <textarea id="reviewDescription" name="reviewDescription" class="form-input" rows="4" required></textarea>
+                </div>
+    
+                <div class="form-group form-rating">
+                  <label for="reviewRating" class="form-label">Rating</label>
+                  <input type="number" id="reviewRating" name="reviewRating" step="0.1" min="0" max="5" class="form-input"
+                    required>
+                </div>
+    
+                <button type="submit" class="form-submit">Submit</button>
+              </form>
+              <% } else { %>
+                <form id="reviewForm" action="/updatecreview" method="post">
+                  <input type="hidden" name="userid" value="<%= userid %>">
+                  <input type="hidden" name="hallid" value="<%= screenings[0].HALLID %>">
+                  <div class="form-group">
+                    <label for="reviewDescription" class="form-label">Review Description</label>
+                    <textarea id="reviewDescription" name="reviewDescription" class="form-input" rows="4" value=""
+                      required><%= updatereview[0].COMMENTS %></textarea>
+                  </div>
+    
+                  <div class="form-group form-rating">
+                    <label for="reviewRating" class="form-label">Rating</label>
+                    <input type="number" id="reviewRating" name="reviewRating" step="0.1" min="0" max="5" class="form-input"
+                      value="<%= updatereview[0].RATING %>" required>
+                  </div>
+    
+                  <button type="submit" class="form-submit">Update</button>
+                </form>
+    
+                <form id="reviewForm" action="/deletecreview" method="post">
+                  <input type="hidden" name="userid" value="<%= userid %>">
+                  <input type="hidden" name="hallid" value="<%= screenings[0].HALLID %>">
+                  <button type="submit" class="delete-submit"> <i class='bx bxs-trash'></i> Delete</button>
+                </form>
+    
+                <% } %>
+    <% } else { %>
+        <script>
+            alert('No screenings available.');
+            window.location.href = '/theaters'; // Redirects user to the homepage or a relevant page
+        </script>
+    <% } %>
+      </div>
+
+      <% reviews.forEach(review=> { %>
+
+
+        <div class="review-view-container">
+          <div class="user-image">
+            <img src="https://shorturl.at/mK068" alt="User Image">
+          </div>
+          <div class="review-content">
+            <div class="user-info">
+              <h3 class="user-name">
+                <%= review.NAME %>
+              </h3>
+            </div>
+            <div class="user-rating">
+              <span>
+                <%= review.RATINGS %>
+              </span>
+              <span class="star-icon">&#9733;</span>
+            </div>
+            <div class="review-description">
+              <p>
+                <%= review.COMMENTS %>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <% }); %>
+    </div>
+
+    <%- include('footer')%>
+      <script src="/js/screeningFilter.js"></script>
+</body>
+
+</html>

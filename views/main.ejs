@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+    crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="./styles/style.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+  <title>Movie Database</title>
+</head>
+
+<body>
+
+  <!--navigation bar code-->
+
+  <!-- change nav -->
+  <%- include('header', { active: 'home' }) %>
+    <!--needs to be fixed later basically the sliding images-->
+
+    <div class="carousel">
+      <div class="carousel-slide active">
+        <img class="cimage" src="/images/bgindex.jpg" alt="Slide 1">
+      </div>
+      <div class="carousel-slide">
+        <img class="cimage" src="/images/bgindex2.jpg" alt="Slide 2">
+      </div>
+      <div class="carousel-slide">
+        <img class="cimage" src="/images/bgindex3.jpg" alt="Slide 3">
+      </div>
+      <button class="carousel-button prev" onclick="changeSlide(-1)">❮</button>
+      <button class="carousel-button next" onclick="changeSlide(1)">❯</button>
+    </div>
+
+    <div id="movie-search-section">
+      <!--<label for="movie-search"><h2>Search Movie:</h2></label>-->
+      <input type="text" id="movie-search" placeholder="Search by title...">
+      <div class="search-icon"><i class='bx bx-search bx-sm'></i></div>
+    </div>
+    <ul id="search-results"></ul>
+
+    <div id="movie-details"></div>
+
+
+    <%- include('footer')%>
+      <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+
+        function showSlide(n) {
+          slides[currentSlide].classList.remove('active');
+          currentSlide = (n + slides.length) % slides.length;
+          slides[currentSlide].classList.add('active');
+        }
+
+        function changeSlide(n) {
+          showSlide(currentSlide + n);
+        }
+      </script>
+
+      <script>
+        $(document).ready(function () {
+          // Listen for input in the movie search box
+          $('#movie-search').on('input', function () {
+            var query = $(this).val();
+            if (query.length > 2) { // Only search if at least 3 characters are typed
+              $.ajax({
+                url: '/search-movies', // Backend endpoint for searching movies
+                method: 'GET',
+                data: { query: query }, // Send the current value of the text input as the query parameter
+                success: function (movies) {
+                  $('#search-results').empty(); // Clear previous search results
+                  movies.forEach(function (movie) {
+                    // Append each movie as a list item to the search results
+                    $('#search-results').append(`<li data-movie-id="${movie.MOVIEID}"><div class="test">${movie.TITLE}</div></li>`);
+                  });
+                },
+                error: function (xhr, status, error) {
+                  console.error("Error fetching movies:", status, error);
+                  $('#search-results').empty().append('<li>Failed to fetch results.</li>');
+                }
+              });
+            } else {
+              $('#search-results').empty(); // Clear search results if the query is less than 3 characters
+            }
+          });
+        });
+      </script>
+
+      <script>
+                $(document).ready(function () {
+          // Search functionality remains the same...
+
+          // Handle movie selection from search results
+          $(document).on('click', '#search-results li', function () {
+            var movieId = $(this).data('movie-id');
+            $('#search-results').empty();
+            // Fetch and display movie details
+            $.ajax({
+              url: `/movie-details/${movieId}`, // Assume you have this endpoint
+              method: 'GET',
+              success: function (movie) {
+                // Assuming 'movie' is the object returned with all details
+                // Update UI with movie details
+                $('#movie-details').html(`
+                <div class="s-container">
+                    <div class="left">
+                        <img src="${movie.POSTER}" alt="Movie Poster" class="movie-poster">
+                    </div>
+                    <div class="right">
+
+                        <div class="date">
+                    
+                        </div>
+                        
+                        <div class="movie-title">
+                          <a href="/Movies/${movie.MOVIEID}">
+                            ${movie.TITLE}
+                          </a>
+                        </div>
+                        
+
+                        <div class="genre">
+                            ${movie.RELEASEDATE}
+                        </div>
+                        <div class="screenings">
+                        
+                            <span>
+                            ${movie.OVERVIEW}
+                            </span>
+                        </div>
+                        
+
+                        </div>
+                    </div>
+                </div>
+
+                `);
+              },
+              error: function () {
+                $('#movie-details').html('<p>Error fetching movie details.</p>');
+              }
+            });
+          });
+        });
+      </script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+    crossorigin="anonymous"></script>
+    <title>Admin Account Management</title>
+    <link rel="stylesheet" href="/styles/admin-account-style.css" />
+  </head>
+  <body>
+    <%- include('header', { active: 'home' }) %>
+
+    <h2 class="cast-title">Account Management</h2>
+    <div class="update-container">
+    
+      <form action="/update-info" method="post">
+      
+        <label for="currentPassword">Current Password:</label>
+        <input type="password" id="currentPassword" name="currentPassword" required/>
+      
+      
+        <label for="email">New Email:</label>
+        <input type="email" id="email" name="email" />
+      
+      
+        <label for="password">New Password:</label>
+        <input type="password" id="password" name="password" />
+      
+        <button class="button" type="submit">Update Information</button>
+      </form>  
+   </div>
+   <% console.log(role) ;%>
+   <% if (role === 'Admin') { %>
+    <h2 class="cast-title">Delete My Admin Account & Appoint New Admin</h2>
+    <div class="update-container">
+      <form action="/admin/replace" method="post">
+        <label for="newName">New Admin Name:</label>
+        <input type="text" id="newName" name="newName" required />
+
+        <label for="newEmail">New Admin Email:</label>
+        <input type="email" id="newEmail" name="newEmail" required />
+
+        <label for="newPassword">New Admin Password:</label>
+        <input type="password" id="newPassword" name="newPassword" required />
+
+        <button class="button" type="submit">
+          Delete My Account & Appoint
+        </button>
+      </form>
+    </div>
+    <% } else if (role === 'HallAdmin') { %>
+       <!-- Soft delete functionality for Hall Admins -->
+       <h2 class="cast-title">Delete My Hall Admin Account</h2>
+       <div class="update-container">
+           <form action="/hall-admin/delete-account" method="post">
+               <label for="confirmPasswordHallAdmin">Confirm Password:</label>
+               <input type="password" id="confirmPasswordHallAdmin" name="confirmPassword" required />
+               <button class="button" type="submit">Delete Account</button>
+           </form>
+       </div>
+   <% } else { %>
+       <!-- Soft delete functionality for Users -->
+       <h2 class="cast-title">Delete My User Account</h2>
+       <div class="update-container">
+           <form action="/user/delete-account" method="post">
+               <label for="confirmPasswordUser">Confirm Password:</label>
+               <input type="password" id="confirmPasswordUser" name="confirmPassword" required />
+               <button class="button" type="submit">Delete Account</button>
+           </form>
+       </div>
+   <% } %>
+    <%- include('footer')%>
+  </body>
+
+  <!--<form action="/logout" method="get">
+    <button type="submit">Logout</button>
+  </form>-->
+
+  
+</html>

@@ -1,0 +1,67 @@
+CREATE OR REPLACE FUNCTION get_rating(p_id IN NUMBER, p_type IN NUMBER)
+RETURN NUMBER IS
+    v_rating NUMBER;
+BEGIN
+    -- Calculate movie rating
+    IF p_type = 1 THEN
+        SELECT ROUND(NVL(AVG(RATING),0),1) INTO v_rating
+        FROM MOVIEREVIEW
+        WHERE MOVIEID = p_id;
+        
+    -- Calculate hall rating
+    ELSIF p_type = 2 THEN
+        SELECT ROUND(NVL(AVG(RATINGS),0),1) INTO v_rating
+        FROM CINEMAHALLREVIEW
+        WHERE HALLID = p_id;
+        
+    ELSE
+        v_rating := NULL; -- In case of incorrect type
+    END IF;
+    
+    RETURN v_rating;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RETURN NULL; -- Return NULL if no ratings found
+END get_rating;
+
+
+
+
+
+CREATE OR REPLACE FUNCTION get_user_password(p_userId IN Person.ID%TYPE)
+RETURN VARCHAR2 IS
+    v_password VARCHAR2(255);
+BEGIN
+    SELECT PASSWORD INTO v_password
+    FROM Person
+    WHERE ID = p_userId;
+    
+    RETURN v_password;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RETURN NULL;
+END ;
+
+
+
+
+
+CREATE OR REPLACE FUNCTION SPLIT_STRING(p_list IN VARCHAR2, p_delimiter IN VARCHAR2 := ',')
+    RETURN VARCHAR2_TABLE PIPELINED
+IS
+    l_idx    PLS_INTEGER;
+    l_list   VARCHAR2(32767) := p_list;
+    l_value  VARCHAR2(32767);
+BEGIN
+    LOOP
+        l_idx := INSTR(l_list, p_delimiter);
+        IF l_idx > 0 THEN
+            PIPE ROW (SUBSTR(l_list, 1, l_idx - 1));
+            l_list := SUBSTR(l_list, l_idx + LENGTH(p_delimiter));
+        ELSE
+            PIPE ROW (l_list);
+            EXIT;
+        END IF;
+    END LOOP;
+    RETURN;
+END SPLIT_STRING;

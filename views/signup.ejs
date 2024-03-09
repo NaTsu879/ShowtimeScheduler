@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="/styles/loginstyle.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+    <div class="wrapper">
+        <form action="/signup"  method="post">
+          <h1>Sign Up as <%= role %></h1>
+          <input type="hidden" name="role" value="<%= role %>">
+          
+          <div class="input-box">
+            <!--<input type="text" placeholder="Username" required>-->
+            <input type="text" id="name" name="name" placeholder="Name" required />
+            <i class='bx bxs-user'></i>
+          </div>
+
+          <div class="input-box">
+            <!--<input type="text" placeholder="Username" required>-->
+            <input type="text" id="email" name="email" placeholder="Email" required />
+            <i class='bx bxs-envelope' ></i>
+          </div>
+
+          <div class="input-box">
+            <!--<input type="password" placeholder="Password" required>-->
+            <input type="password" id="password" name="password" placeholder="Password" required />
+            <i class='bx bxs-lock-alt' ></i>
+          </div>
+
+          <% if (role === 'HallAdmin') { %>
+            <div class="input-box">
+              <input type="text" id="name" name="hallName" placeholder="Hall Name" required />
+              <i class='bx bxs-building-house'></i>
+            </div>
+            <div class="input-box">
+              <input type="text" id="location" name="location" placeholder="Location" required />
+              <i class='bx bxs-map'></i>
+            </div>
+            <div class="input-box">
+              <input type="number" id="numberOfRows" name="numberOfRows" placeholder="Number of Rows" required />
+              <i class='bx bx-row'></i>
+            </div>
+            <div class="input-box">
+              <input type="number" id="seatsPerRow" name="seatsPerRow" placeholder="Seats Per Row" required />
+              <i class='bx bxs-chair'></i>
+            </div>
+          <% } %>
+          
+
+          
+          <div class="remember-forgot">
+            <label><input type="checkbox">Remember Me</label>
+            <a href="#">Forgot Password</a>
+          </div>
+          <button type="submit" class="btn">Sign Up</button>
+          <div class="register-link">
+            <p><a href="/">Back</a></p>
+          </div>
+          
+        </form>
+      </div>
+
+
+    <!--
+    <h2>Sign Up as <%= role %></h2>
+    <form action="/signup" method="post">
+        <input type="hidden" name="role" value="<%= role %>">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <% if (role === 'HallAdmin') { %>
+            <div>
+                <label for="hallId">Hall ID:</label>
+                <input type="number" id="hallId" name="hallId" required>
+            </div>
+        <% } %>
+        <button type="submit">Sign Up</button>
+    </form>-->
+</body>
+</html>

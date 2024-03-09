@@ -1,0 +1,243 @@
+*{
+  
+    font-family: "Poppins", sans-serif;
+  }
+  
+  body{
+      background: rgb(0, 0, 0);
+      background-blend-mode: multiply;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      margin-top: 80px;
+      color:white;
+  }
+
+  header{
+    position:fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    z-index: 100;
+}
+
+.screen-title {
+    
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 10px;
+    padding-bottom: 15px;
+    padding-left: 10px;
+    background-color: rgb(33, 37, 41);
+    border-top: 2px solid rgb(92, 92, 92, 0.5);
+    border-bottom: 2px solid rgb(92, 92, 92, 0.5);
+    border-left: 5px solid rgba(251, 37, 118, 0.8);
+}
+
+#movie-details 
+{
+    margin-bottom: 120px;
+}
+
+#movie-search {
+    position: relative;
+    background-color: #333;
+    border: 2px solid #555;
+    border-right: none; 
+    color: #fff; 
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px 0px 0px 5px;
+    outline: none; 
+    transition: border-color 0.3s ease-in-out;
+    width: 400px; 
+    margin-left: 500px;
+    display: inline-block;
+    
+}
+
+
+
+
+::placeholder {
+    color: #999;
+}
+
+.search-icon
+{
+    
+    background-color: #333;
+    height: 47px;
+    width: 40px;
+    border-radius: 0px 5px 5px 0px;
+    border: 2px solid #555;
+    border-left: none;
+    padding: 10px;
+    color: #555;
+    transition: border-color 0.3s ease-in-out;
+}
+
+
+
+#movie-search-section 
+{
+    display: flex;
+    align-items: center;
+}
+
+#search-results
+{
+    position:absolute;
+    z-index: 1;
+    padding-left: 0px;
+    border-radius: 10px;
+    background-color: #333;
+    border: none;
+    padding-bottom: 10px;
+    margin-top: 5px;
+    left:500px
+}
+
+
+.test {
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    color: #fff;
+    border: none; 
+    height: 40px;
+    cursor: pointer;
+    width: 440px !important;
+    transition: background-color 0.3s ease-in-out;
+    /*margin-left: 460px;*/
+}
+
+.test:hover
+{
+    background-color: #272727;
+}
+
+ul {
+    list-style-type: none;
+    border: none;
+    padding-left: 0px;
+}
+
+.s-container {
+    flex:1;
+    max-width: 800px;
+    display: flex;
+    padding: 20px;
+    min-height: 300px;
+    margin-left: 300px;
+    margin-bottom: 20px;
+    border: 2px solid #555; /* Greish border color */
+    border-radius: 10px;
+    border-left: 5px solid rgba(251, 37, 118, 0.8);
+    transition: transform 0.3s ease-in-out;
+    margin-top: 40px;
+  }
+.s-container:hover
+  {
+    transform: scale(1.05);
+  }
+
+  .left {
+    flex: .62;
+    border-right: 1px solid rgba(255, 255, 255, 0.5);
+  }
+
+  .right {
+    flex: 2;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .genre
+  {
+    color: rgba(255, 255, 255, 0.723);
+    font-size: 16px;
+    border-bottom: solid 1px rgba(255, 255, 255, 0.5);
+    margin-bottom: 5px;
+  }
+
+  
+  .movie-poster {
+    width: 150px;
+    border-radius: 8px;
+  }
+
+  .movie-title {
+    
+    font-size: 24px;
+    font-weight: bold;
+    color:white;
+  }
+  .date
+  {
+    color: rgba(250, 61, 134, 0.882);
+    font-weight: bold;
+  }
+
+ 
+
+  .screening-box {
+    margin-top:10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    width:200px;
+    height:60px;
+    padding: 16px;
+    padding-left:20px ;
+    border-left: rgba(251, 37, 118, 0.8) solid 5px;
+    background-color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .screening-box:hover {
+    background-color: #555;
+  }
+
+  .screening-time {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  #delete-movie {
+    background-color: rgb(206, 18, 90);
+    color: white;
+    width: 550px;
+    padding: 5px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out;
+    margin-top: 20px;
+    margin-bottom: 30px;
+  }
+  
+  #delete-movie:hover {
+      background-color: rgb(183, 12, 77);
+    }
+
+
+    .trailer {
+        background-color: rgb(206, 18, 90);
+        color: white;
+        width: 550px;
+        padding: 5px;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease-in-out;
+        margin-top: 10px;
+      }
+      
+      .trailer:hover {
+          background-color: rgb(183, 12, 77);
+        }

@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <title>Movie Screenings</title>
+
+    <style>
+        * {
+
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: rgb(0, 0, 0);
+            background-blend-mode: multiply;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin-top: 65px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .movie-banner {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            object-position: 50% 20%;
+            opacity: 0.8;
+        }
+
+        .rating {
+            display: inline-block;
+            font-size: 20px;
+
+            font-weight: normal;
+            color: rgb(231, 231, 120);
+        }
+
+        .play-button
+        {
+            position: relative;
+            z-index: 1;
+            left: 143px;
+            top: 160px;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            border: none;
+            color: white;
+            background-color: rgb(251, 37, 119);
+            font-size: 30px;
+            padding-left: 9px;
+            transition: transform 0.20s ease-in-out;
+        }
+
+        .play-button:hover
+        {
+            background-color: rgb(204, 22, 92);
+            transform: scale(1.09);
+
+        }
+
+        .movie-poster {
+            position: absolute;
+            width: 200px;
+            height: 300px;
+            left: 70px;
+            top: 350px;
+            object-fit: cover;
+        }
+        
+        
+
+
+
+        .play-text {
+            margin-left: 320px;
+            margin-top: -10px;
+            color: white;
+        }
+
+        .play-text h1 {
+
+            font-weight: bold;
+        }
+
+        .overview {
+            margin-top: 20px;
+            padding-right: 20px;
+            margin-bottom: 20px;
+        }
+
+        .release-date-text {
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .banner-container {
+            background-image: linear-gradient(to top, rgb(33, 33, 33, 0.1), rgb(255, 216, 231, 0.8));
+        }
+
+        .cast-container {
+            margin-top: 200px;
+            margin-left: 15px;
+            margin-right: 15px;
+            color: white;
+        }
+
+        .cast-title {
+            border-radius: 5px;
+            margin-top: 80px;
+            margin-bottom: 20px;
+            padding-top: 10px;
+            padding-bottom: 15px;
+            padding-left: 10px;
+            background-color: rgb(33, 37, 41);
+            border-top: 2px solid rgb(92, 92, 92, 0.5);
+            border-bottom: 2px solid rgb(92, 92, 92, 0.5);
+            border-left: 5px solid rgba(251, 37, 118, 0.8);
+        }
+
+        .screen-title {
+            border-radius: 5px;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            padding-top: 10px;
+            padding-bottom: 15px;
+            background-color: rgb(33, 37, 41);
+            padding-left: 10px;
+            border-top: 2px solid rgb(92, 92, 92, 0.5);
+            border-bottom: 2px solid rgb(92, 92, 92, 0.5);
+            border-left: 5px solid rgba(251, 37, 118, 0.8);
+        }
+
+        .screenings-container {
+            margin-left: 15px;
+            margin-right: 15px;
+            color: white;
+        }
+
+        .review-container {
+            margin-left: 15px;
+            margin-right: 15px;
+            color: white;
+        }
+
+        .review-title {
+            border-radius: 5px;
+            background-color: rgb(33, 37, 41);
+            margin-top: 50px;
+            margin-bottom: 50px;
+            padding-top: 10px;
+            padding-bottom: 15px;
+            padding-left: 10px;
+            border-top: 2px solid rgb(92, 92, 92, 0.5);
+            border-bottom: 2px solid rgb(92, 92, 92, 0.5);
+            border-left: 5px solid rgba(251, 37, 118, 0.8);
+        }
+
+        .screening-list-container {
+            display: flex;
+            width: 100%;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            row-gap: 10px;
+            column-gap: 10px;
+        }
+
+        .screening-container {
+            width: 300px;
+            padding: 20px;
+            border: 2px solid #333;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .screening-container:hover {
+            transform: scale(1.01);
+        }
+
+        .screening-date {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: rgb(57, 57, 253);
+        }
+
+        .screening-time {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .screening-time-icon {
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .screening-time-icon:hover {
+            background-color: #777;
+        }
+
+        .buy-ticket-btn {
+            width: 250px;
+            height: 30px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .buy-ticket-btn:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .prev-btn,
+        .next-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .prev-btn {
+            left: 10px;
+        }
+
+        .next-btn {
+            right: 20px;
+        }
+
+
+
+        .director-slide {
+            width: 100%;
+            padding: 20px;
+            padding-top: 40px;
+            height: 250px;
+            margin-right: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            scroll-snap-align: start;
+            border: 2px solid #333;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .slide {
+            width: 200px;
+            padding: 20px;
+            margin-right: 20px;
+            text-align: center;
+            scroll-snap-align: start;
+            border: 2px solid #333;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .circle {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            border: 3px solid white;
+        }
+
+        .cast-name {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .character-name {
+            font-size: 14px;
+        }
+
+        .form-container {
+            width: 97%;
+            padding: 20px;
+            background-color: #000000;
+            border-radius: 10px;
+            border: 2px solid #333;
+            margin: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: block;
+            font-weight: bold;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #444;
+            color: white;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        .form-rating {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-rating label {
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .form-rating input {
+            width: 80px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #444;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .form-submit {
+            background-color: #4CAF50;
+            color: white;
+            width: 100px;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease-in-out;
+            position: relative;
+        }
+
+        .form-submit:hover {
+            background-color: #45a049;
+        }
+
+        .filters-container {
+            color: #fff;
+        }
+
+
+
+        #hall-select {
+            background-color: #333;
+            color: #fff;
+            width: 300px;
+            border: none;
+            border-left: 5px solid rgba(251, 37, 118, 0.8);
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        #hall-select option {
+            background-color: #444;
+            color: #fff;
+        }
+
+        #hall-select:hover {
+            background-color: #555;
+        }
+
+        #hall-select option:checked {
+            background-color: #666;
+        }
+
+        .screening-hall-name {
+            color: rgb(255, 253, 125);
+            padding-left: 2px;
+            font-weight: bold;
+        }
+
+        .review-view-container {
+            display: flex;
+            width: 97%;
+            margin-bottom: 20px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            overflow: hidden;
+            background-color: #000000;
+            box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+            margin-left: 20px;
+            position: relative;
+        }
+
+        .user-image {
+            flex: 0 0 auto;
+            padding: 10px;
+            width: 100px;
+            height: 100px;
+        }
+
+        .user-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .review-content {
+            flex: 1 1 auto;
+            padding: 10px;
+            position: relative;
+            color: #c9c9c9;
+            padding-right: 100px;
+        }
+
+        .user-info {
+            margin-bottom: 10px;
+        }
+
+        .user-name {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .user-rating {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 16px;
+            color: #fff874;
+        }
+
+
+
+        .delete-submit {
+            background-color: #4caf4f00;
+            color: rgb(255, 66, 66);
+            width: 100px;
+            padding: 10px;
+            padding-left: 0px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            position: relative;
+            top: -42px;
+            left: 100px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .delete-submit:hover {
+            color: rgb(200, 1, 1);
+        }
+
+        .review-description {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #2b2b2b;
+            margin: 10% auto;
+            padding: 10px;
+            padding-top: 0px;
+            border: none;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            margin-left: 660px;
+            margin-top: 0px;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+
+        @media (max-width:991px)
+        {
+
+            body
+            {
+                margin-top: 55px;
+            }
+            .sidebar{
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            }
+
+            .screening-container
+            {
+                width:100%
+            }
+
+            .buy-ticket-btn
+            {
+                width:100%
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <%- include('header', { active: 'movies' }) %>
+
+
+        <div class="play-container">
+            <div class="banner-container">
+                <img class="movie-banner" src="<%= movies[0].BACKDROP %>">
+            </div>
+
+            
+            <img class="movie-poster" src="<%= movies[0].POSTER %>">
+
+            <button class="play-button" onclick="openModal()">&#9654;</button>
+
+                <div id="videoModal" class="modal" onclick="closeModal()">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <iframe id="videoFrame" height="350" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+            <div class="play-text">
+                <div class="rating">
+                    <%=movies[0].RATING %> <i class='bx bxs-star'></i>
+                </div>
+                <h1>
+                    <%= movies[0].TITLE %>
+
+                </h1>
+
+
+                <div class="genres">
+                    <% movies[0].Genres.forEach(genre=> { %>
+                        <span class="genre">
+                            <%= genre %>
+                        </span>
+                        <% }); %>
+                </div>
+
+                <div class="overview">
+                    <h6>
+                        <%= movies[0].OVERVIEW %>
+                    </h6>
+                </div>
+
+                <div class="release-date">
+                    <h6 class="release-date-text">
+                        Release Date:
+                        <h6>
+                            <%= movies[0].RELEASEDATE %>
+                        </h6>
+                    </h6>
+
+                </div>
+
+                
+
+            </div>
+        </div>
+
+        <div class="cast-container">
+            <h2 class="cast-title">Movie Cast</h2>
+            <div class="director">
+                <div class="director-slide">
+                    <img class="circle" src="<%= movies[0].IMAGE %>" alt="">
+                    <div class="cast-name">
+                        Director
+                    </div>
+                    <div class="character-name">
+                        <%= movies[0].NAME %>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-container">
+                <div class="slider">
+                    <% casts.forEach(cast=> { %>
+                        <div class="slide">
+                            <img class="circle" src="<%= cast.IMAGE %>" alt="">
+                            <div class="cast-name">
+                                <%= cast.NAME %>
+                            </div>
+                            <div class="character-name">
+                                <%= cast.CHARACTER %>
+                            </div>
+                        </div>
+                        <% }); %>
+                </div>
+                <button class="prev-btn" onclick="changeSlide(-1)">&#10094;</button>
+                <button class="next-btn" onclick="changeSlide(1)">&#10095;</button>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="screenings-container">
+            <h2 class="screen-title">Movie Screenings</h2>
+
+            <div class="filters-container">
+
+                <select id="hall-select">
+                    <option value="all">Available Halls</option>
+                    <% screenings.forEach(screening=> { %>
+                        <option value="<%= screening.HALLNAME %>">
+                            <%= screening.HALLNAME %>
+                        </option>
+                        <% }); %>
+                </select>
+            </div>
+
+            <div class="check">
+                <!-- Screenings list -->
+                <div class="screening-list-container" id="screenings-list">
+                    <% screenings.forEach(screening=> { %>
+
+
+                        <div class="screening-container">
+
+                            <div class="screening-hall-name">
+                                <%= screening.HALLNAME %>
+                            </div>
+                            <div class="screening-date">
+                                <%= screening.SCREENINGDATE.toDateString() %>
+                            </div>
+
+                            <div class="screening-time">
+                                <div class="screening-time-icon">
+                                    <%= screening.SHOWTIME.toLocaleTimeString() %>
+                                </div>
+                            </div>
+                            <a href="/booking/<%= screening.HALLID %>/<%= screening.SCREENINGID %>">
+                                <div class="get-ticket">
+                                    <button class="buy-ticket-btn">Buy Ticket</button>
+                                </div>
+                            </a>
+                        </div>
+
+                        <% }); %>
+                </div>
+            </div>
+        </div>
+
+        <div class="review-container">
+            <h2 class="review-title">Reviews</h2>
+
+            <div class="form-container">
+                <% if (update==0) { %>
+                    <form id="reviewForm" action="/mreview" method="post">
+                        <input type="hidden" name="userid" value="<%= userid %>">
+                        <input type="hidden" name="movieid" value="<%= movies[0].MOVIEID %>">
+                        <div class="form-group">
+                            <label for="reviewDescription" class="form-label">Review Description</label>
+                            <textarea id="reviewDescription" name="reviewDescription" class="form-input" rows="4"
+                                required></textarea>
+                        </div>
+
+                        <div class="form-group form-rating">
+                            <label for="reviewRating" class="form-label">Rating</label>
+                            <input type="number" id="reviewRating" name="reviewRating" step="0.1" min="0" max="5"
+                                class="form-input" required>
+                        </div>
+
+                        <button type="submit" class="form-submit">Submit</button>
+                    </form>
+                    <% } else { %>
+                        <form id="reviewForm" action="/updatemreview" method="post">
+                            <input type="hidden" name="userid" value="<%= userid %>">
+                            <input type="hidden" name="movieid" value="<%= movies[0].MOVIEID %>">
+                            <div class="form-group">
+                                <label for="reviewDescription" class="form-label">Review Description</label>
+                                <textarea id="reviewDescription" name="reviewDescription" class="form-input" rows="4"
+                                    value="" required><%= updatereview[0].COMMENTS %></textarea>
+                            </div>
+
+                            <div class="form-group form-rating">
+                                <label for="reviewRating" class="form-label">Rating</label>
+                                <input type="number" id="reviewRating" name="reviewRating" step="0.1" min="0" max="5"
+                                    class="form-input" value="<%= updatereview[0].RATING %>" required>
+                            </div>
+
+                            <button type="submit" class="form-submit">Update</button>
+                        </form>
+
+                        <form id="reviewForm" action="/deletemreview" method="post">
+                            <input type="hidden" name="userid" value="<%= userid %>">
+                            <input type="hidden" name="movieid" value="<%= movies[0].MOVIEID %>">
+                            <button type="submit" class="delete-submit"> <i class='bx bxs-trash'></i> Delete</button>
+                        </form>
+
+                        <% } %>
+            </div>
+
+            <% reviews.forEach(review=> { %>
+
+
+                <div class="review-view-container">
+                    <div class="user-image">
+                        <img src="https://shorturl.at/mK068" alt="User Image">
+                    </div>
+                    <div class="review-content">
+                        <div class="user-info">
+                            <h3 class="user-name">
+                                <%= review.NAME %>
+                            </h3>
+                        </div>
+                        <div class="user-rating">
+                            <span>
+                                <%= review.RATING %>
+                            </span>
+                            <span class="star-icon">&#9733;</span>
+                        </div>
+                        <div class="review-description">
+                            <p>
+                                <%= review.COMMENTS %>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <% }); %>
+
+        </div>
+
+
+
+        <%- include('footer')%>
+            <script>
+                let currentIndex = 0;
+                const totalSlides = document.querySelectorAll('.slide').length;
+                const slideWidth = document.querySelector('.slide').clientWidth + 10; // Including margin-right
+
+                function changeSlide(direction) {
+                    currentIndex = (currentIndex + direction + totalSlides) % totalSlides;
+                    updateSlider();
+                }
+
+                function updateSlider() {
+                    const translateValue = -currentIndex * slideWidth;
+                    document.querySelector('.slider').style.transform = `translateX(${translateValue}px)`;
+                }
+            </script>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const hallSelect = document.getElementById("hall-select");
+                    const screeningContainers = document.querySelectorAll(".screening-container");
+
+                    hallSelect.addEventListener("change", function () {
+                        const selectedHall = this.value;
+
+                        screeningContainers.forEach(container => {
+                            const screeningHallName = container.querySelector(".screening-hall-name").textContent.trim();
+                            if (selectedHall === "all" || screeningHallName === selectedHall) {
+                                container.style.display = "block";
+                            } else {
+                                container.style.display = "none";
+                            }
+                        });
+                    });
+                });
+            </script>
+
+            <script>
+                function openModal() {
+                    var modal = document.getElementById('videoModal');
+                    var videoFrame = document.getElementById('videoFrame');
+                    modal.style.display = "block";
+                    videoFrame.src = "<%= movies[0].TRAILER %>";
+                }
+
+                function closeModal() {
+                    var modal = document.getElementById('videoModal');
+                    var videoFrame = document.getElementById('videoFrame');
+                    modal.style.display = "none";
+                    videoFrame.src = "";
+                }
+            </script>
+
+
+</body>
+
+</html>

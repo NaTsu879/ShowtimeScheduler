@@ -1,0 +1,246 @@
+*{
+  
+  font-family: "Poppins", sans-serif;
+}
+body{
+    background: rgb(0, 0, 0);
+    background-blend-mode: multiply;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-top: 80px;
+}
+
+.page-title
+{
+    margin-left:25px;
+    color: white;
+    font-weight: bold;
+    
+}
+
+header{
+    position:fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    background: black;
+    z-index: 100;
+}
+
+.showing
+{
+  color:white;
+  margin-left: 20px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.section-container
+{
+    margin-left: 15px;
+    display:flex;
+    margin-bottom: 20px;
+    justify-content: space-between;
+}
+
+.theater-list-container
+{
+    display:flex;
+    flex: 2;
+   
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+
+.cinema-container {
+    width: 300px;
+    height:100px;
+    background-color: rgb(33,37,41);
+    padding: 15px;
+    border-radius: 16px;
+    box-shadow: 0 0 10px rgba(251, 37, 118, 0.3);
+    overflow: hidden;
+    transition: box-shadow 0.3s ease-in-out;
+    margin-right:15px;
+    margin-bottom:15px;
+    position: relative;
+  }
+  
+  .cinema-name {
+    
+    font-size: 16px;
+    color: #fff2f2;
+    font-weight: bold;
+    margin: 0;
+    transition: color 0.3s ease-in-out;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .cinema-rating
+  {
+    font-size: 13px;
+    position: absolute;
+    left: 255px;
+    top:8px; 
+    z-index: 1;
+    color: gold;
+  }
+  
+  .cinema-container:hover {
+    box-shadow: 0 0 10px rgba(251, 37, 118, 0.5);
+    transform: scale(1.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .cinema-container:hover .cinema-name {
+    color: rgb(255, 78, 146); /* Change the color on hover */
+  }
+
+  .filter-title
+{
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 13px;
+  background-color: rgb(33, 37, 41);
+  border-top: 2px solid rgb(92, 92, 92, 0.5);
+  border-bottom: 2px solid rgb(92, 92, 92, 0.5);
+  border-left: 5px solid rgba(251, 37, 118, 0.8);
+  color:white;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.top-title
+{
+  border-radius: 5px;
+  margin-top: 90px;
+  margin-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 13px;
+  background-color: rgb(33, 37, 41);
+  border-top: 2px solid rgb(92, 92, 92, 0.5);
+  border-bottom: 2px solid rgb(92, 92, 92, 0.5);
+  border-left: 5px solid rgba(251, 37, 118, 0.8);
+  color:white;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.filters-container {
+  color: #fff;
+  flex: 1;
+  margin-right: 20px;
+  max-width: 490px;
+  
+}
+
+.filters-container h2
+{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#location-select {
+  background-color: #333;
+  color: #fff;
+  width: 490px;
+  border: none;
+  border-left: 5px solid rgba(251, 37, 118, 0.8);
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+#location-select option {
+  background-color: #444;
+  color: #fff;
+}
+
+#location-select:hover {
+  background-color: #555;
+}
+
+#location-select option:checked {
+  background-color: #666;
+}
+
+
+.slider-container {
+  margin-top:15px;
+  margin-left: 10px;
+  width: 95%;
+  position: relative;
+}
+
+.noUi-handle {
+  top: 50%;
+  transform: translateY(-15%);
+  width: 30px !important;
+  height: 30px !important;
+  margin-bottom: 10px !important;
+  border-radius: 50%;
+  cursor: pointer;
+  border:none;
+  background-color: rgb(251, 37, 119);
+  box-shadow: none;
+}
+
+.noUi-handle::before,
+.noUi-handle::after {
+  display: none;
+}
+
+.noUi-base
+{
+  background-color: #444;
+}
+
+.noUi-horizontal
+{
+  background-color: black;
+  box-shadow: none;
+  border:none;
+  height: 10px;
+}
+
+.noUi-connect {
+  background-color: rgba(251, 37, 119); 
+  height: 10px; 
+}
+
+.values {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.values span {
+  font-size: 16px;
+  margin-left:10px;
+  margin-right: 20px;
+  font-weight: bold;
+}
+
+  a{
+    text-decoration: none;
+  }
+
+
+  @media (max-width:991px)
+{
+    .sidebar{
+        background: rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+    }
+}

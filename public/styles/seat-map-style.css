@@ -1,0 +1,235 @@
+*{
+  
+    font-family: "Poppins", sans-serif;
+  }
+  
+  body{
+      background: rgb(0, 0, 0);
+      background-blend-mode: multiply;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      margin-top: 80px;
+      color:white;
+  }
+  
+  .legend
+  {
+    display: flex;
+    justify-content: space-evenly;
+    column-gap: 10px;
+    margin-left: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .legend span
+  {
+        padding-bottom: 2px;
+        margin-bottom: 5px;
+  }
+  header{
+      position:fixed;
+      top: 0;
+      left: 0;
+      width:100%;
+      z-index: 100;
+  }
+
+#seat-map {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+.screen {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: none;
+    border: none;
+    border-top: 2px solid rgba(251, 37, 118, 0.8);
+    border-bottom: 2px solid rgba(251, 37, 118, 0.8);
+}
+
+.row {
+    display: flex;
+    align-items: center;
+}
+
+.row-label {
+    margin-right: 10px;
+    font-weight: bold;
+    display: inline-block;
+    width: 20px;
+}
+
+.seat {
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+    background-color: #fff;
+    border: none;
+    position: relative;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s;    
+}
+
+.seat:hover
+{
+    background-color: #909090;
+}
+
+.seat.selected {
+    background-color: green !important;
+}
+
+.seat.reserved {
+    background-color: red !important;
+    cursor: not-allowed;
+}
+
+.seat.Wheelchair {
+    background-color: rgb(255, 255, 255);
+    background-image: url("https://cdn.discordapp.com/attachments/587526709847392267/1215608608969064518/istockphoto-868187886-612x612-removebg-preview.png?ex=65fd5ebd&is=65eae9bd&hm=37e8ea2020462267792eca78fe4a7a0a7a7e356c8ea85b8a00bdfecd261546a7&");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.seat.Wheelchair:hover
+{
+    background-color: #909090;
+}
+
+.seat.DoubleDaybed {
+    background-color: gold;
+}
+
+.seat.DoubleDaybed:hover
+{
+    background-color: rgb(237, 182, 1);
+}
+
+.seat.FullRecliner {
+    background-color: silver;
+}
+
+.seat.FullRecliner:hover
+{
+    background-color: rgb(106, 106, 106);
+}
+
+.checkmark {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: white;
+}
+
+#proceed-button {
+  background-color: rgb(206, 18, 90);
+  color: white;
+  width: 395px;
+  padding: 5px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease-in-out;
+  margin-left: 580px;
+  margin-bottom: 50px;
+}
+
+#proceed-button:hover {
+    background-color: rgb(183, 12, 77);
+  }
+
+.book-container
+{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #555; /* Greish border color */
+    border-radius: 10px;
+    border-left: 5px solid rgba(251, 37, 118, 0.8);
+    margin-left: 550px;
+    padding-bottom: 30px;
+    width: 400px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right: 10px;
+}
+
+.book-container p
+{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#voucher-select {
+    background-color: #333;
+    color: #fff;
+    width: 390px;
+    border: none;
+    border-left: 5px solid rgba(251, 37, 118, 0.8);
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  
+  #voucher-select option {
+    background-color: #444;
+    color: #fff;
+  }
+  
+  #voucher-select:hover {
+    background-color: #555;
+  }
+  
+  #voucher-select option:checked {
+    background-color: #666;
+  }
+
+  #confirm-booking
+  {
+background-color: rgb(206, 18, 90);
+  color: white;
+  width: 390px;
+  padding: 5px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease-in-out;
+  margin-bottom: 10px;
+  }
+
+  #confirm-booking:hover
+  {
+    background-color: rgb(183, 12, 77);
+  }
+
+  ul{
+    list-style-type: none;
+    border: none;
+    padding-left: 4px;
+  }
+
+  .seat-sel
+  {
+    background-color: #333;
+    color: white;
+    padding-left: 4px;
+    padding-right: 3px;
+    padding-top: 2px;
+    padding-bottom: 4px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+  }

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous"></script>
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="./styles/theaterstyle.css">
+
+
+
+
+
+    <!-- ... other head elements ... -->
+    <title>Theaters</title>
+    <style>
+        .cinema {
+            display: none;
+        }
+
+        /* Hide all cinemas initially */
+        .cinema[data-location="all"] {
+            display: block;
+        }
+
+        /* Show all cinemas when 'all' is selected */
+    </style>
+</head>
+
+<body>
+    <%- include('header', { active: 'theatres' }) %>
+        <h1 class="top-title">Theaters</h1>
+        <h2 class="showing">Showing <span id="cinema-count">
+            <%= theaters.length %>
+        </span> theaters</h2>
+        <!-- <div class="page-title">
+            <h1>Theaters</h1>
+            Showing <span id="cinema-count">
+                <%= theaters.length %>
+            </span> theaters
+        </div>-->
+
+
+        <div class="section-container">
+
+
+
+
+
+
+            <div id="cinema-list">
+
+                <div class="theater-list-container">
+                    <% theaters.forEach(theater=> { %>
+                        <a href="/theater/<%= theater.HALLID %>">
+                            <div class="cinema" data-location="<%= theater.LOCATION %>" data-rating="<%= theater.RATING %>">
+
+                                
+
+                                <div class="cinema-container">
+                                    <div class="cinema-rating">
+                                        <%= theater.RATING %>  <i class='bx bxs-star'></i> 
+                                    </div>
+                                    <h2 class="cinema-name">
+                                        <%= theater.NAME %>
+                                    </h2>
+                                </div>
+
+                            </div>
+
+                        </a>
+
+
+                        <% }); %>
+                </div>
+            </div>
+
+
+            <div class="filters-container">
+                <h1 class="filter-title">Filters</h1>
+                <h2>Location</h2>
+                <select id="location-select">
+                    <option value="all">All Locations</option> <!-- Add option to show all locations -->
+                    <% locations.forEach(location=> { %>
+                        <option value="<%= location.LOCATION %>">
+                            <%= location.LOCATION %>
+                        </option>
+                        <% }); %>
+                </select>
+
+
+                <h2>Rating:</h2>
+                <div class="slider-container" id="slider"></div>
+                <div class="values">
+                    <span id="value1"></span>
+                    <span id="value2"></span>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+        <%- include('footer')%>
+
+            <script src="/js/filterTheaters.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.js"></script>
+      <script>
+        const slider = document.getElementById('slider');
+        const value1 = document.getElementById('value1');
+        const value2 = document.getElementById('value2');
+
+        noUiSlider.create(slider, {
+          start: [0, 5],
+          connect: true,
+          range: {
+            'min': 0,
+            'max': 5
+          },
+          step: 0.1
+        });
+
+        slider.noUiSlider.on('update', (values, handle) => {
+          if (handle === 0) {
+            value1.textContent = parseFloat(values[handle]).toFixed(1);
+          } else {
+            value2.textContent = parseFloat(values[handle]).toFixed(1);
+          }
+        });
+      </script>
+
+            <!-- ... rest of your HTML ... -->
+</body>
+
+</html>
